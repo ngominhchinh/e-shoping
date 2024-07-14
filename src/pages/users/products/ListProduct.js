@@ -11,7 +11,7 @@ export default function ListProduct(){
         category:{
             name:""
         },
-        images:{}
+        images:[]
     }])
 
     useEffect(()=>{
@@ -32,11 +32,11 @@ export default function ListProduct(){
                                 
                                 <button class="btn btn-primary"
                                     onClick={() => {
-                                        navigate("/products/detail/", { state: { obj: e } });
+                                        navigate("/products/detail", { state: { obj: e } });
                                       }}
                                 >Detail</button>
                             </div>
-                    </div>
+                        </div>
                     </div>
                     
                 ))}

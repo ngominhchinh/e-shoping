@@ -4,14 +4,18 @@ import { Routes,Route } from 'react-router-dom';
 import Home from './pages/users/Home/Home';
 import ListProduct from './pages/users/products/ListProduct';
 import DetailProduct from './pages/users/products/DetailProduct';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App() {
   return (
     <>
         <Routes>
+          <Route path='' element={<Login/>}></Route>
+          <Route path='register' element={<Register/>}></Route>
           <Route path="products" element={<Home />}>
             <Route path="" element={<ListProduct />}></Route>
-            <Route path='detail' element={<DetailProduct></DetailProduct>}></Route>
+            <Route path='detail' element={<DetailProduct/>}></Route>
           </Route>
           
         </Routes>
