@@ -2,8 +2,11 @@ import {Form, Field, Formik} from 'formik';
 import { useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
+import { useContext } from 'react';
+import { MyContext } from '../MyContext';
 export default function Login() {
     let navigate = useNavigate();
+    let [cxt, setCxt] = useContext(MyContext);
   return (
     <>
       <div className="row mt-5 pt-5">
@@ -23,6 +26,7 @@ export default function Login() {
                 .post("http://localhost:3000/users/login", values)
                 .then((x) => {
                   alert("Đăng nhập thành công!");
+                  setCxt({...cxt,currentUser: values});
                   navigate("/products");
                   localStorage.setItem("user", JSON.stringify(x.data));
                 })
@@ -48,7 +52,7 @@ export default function Login() {
                   placeholder="Input your password"
                 />
               </div>
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary mt-3">Login</button>
             </Form>
           </Formik>
         </div>

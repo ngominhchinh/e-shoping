@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { MyContext } from "../MyContext";
 export default function Nav(){
 
     let[categories, setCategories] = useState([]);
     useEffect(()=>{
         axios.get('http://localhost:3000/categories').then(x =>{
             setCategories(x.data);
+            
         })
     })
-
+    let [cxt, setCxt] = useContext(MyContext);
+    
+    
     return(
         <>
                     
@@ -33,9 +37,9 @@ export default function Nav(){
                                     Category
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><Link className="dropdown-item" value="0">All</Link></li>
+                                    <li><Link className="dropdown-item" value="0" onClick={()=>setCxt({selectedCategoryId:0})}>All</Link></li>
                                     {categories.map(item =>(
-                                        <li><Link  class="dropdown-item" value={item.id}>{item.name}</Link></li>
+                                        <li><Link  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
                                     ))}
                                     
                                 </ul>
@@ -45,13 +49,16 @@ export default function Nav(){
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
+                            <button class="btn btn-outline-success" type="submit" >
+                                Search
+                            </button>
                         </form>
                         </div>
                     </div>
                 </nav>
             </div>
+            {}
         </>
     )
 }

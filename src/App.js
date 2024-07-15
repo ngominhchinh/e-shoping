@@ -6,13 +6,18 @@ import ListProduct from './pages/users/products/ListProduct';
 import DetailProduct from './pages/users/products/DetailProduct';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import { MyContext } from './MyContext';
+import { useContext } from 'react';
+import Cart from './pages/users/Cart/Cart';
 
 function App() {
+  const ct = useContext(MyContext);
   return (
     <>
         <Routes>
           <Route path='' element={<Login/>}></Route>
           <Route path='register' element={<Register/>}></Route>
+          <Route path='cart' element={<Cart/>}></Route>
           <Route path="products" element={<Home />}>
             <Route path="" element={<ListProduct />}></Route>
             <Route path='detail' element={<DetailProduct/>}></Route>
