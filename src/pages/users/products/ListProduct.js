@@ -57,21 +57,16 @@ export default function ListProduct(){
             <h1>{cxt.searchValue}</h1>
             {/* <h4>Xin chao: {cxt.currentUser.username}</h4> */}
             <div className="row mt-5">           
-                {
-                   
-                
+                {                                   
                     list.map((e) => (
-                    <div className="col-3">
+                    <div className="col-3 mt-3">
                         <div class="card" style={{width: '18rem'}}>
                             <img src={"images/"+e.images[0]} class="card-img-top" alt="..."/>
                             <div class="card-body text-center">
-                                <h5 class="card-title">{e.name}</h5>
-                                
-                                <button class="btn btn-primary"
-                                    onClick={() => {
-                                        navigate("/products/detail", { state: { obj: e } });
-                                      }}
-                                >Detail</button>
+                                <h5 class="card-title">{e.name}</h5>                                
+                                <Link class="btn btn-primary"
+                                    to = {'detail/' + e.id}
+                                >Detail</Link>
                             </div>
                         </div>
                     </div>

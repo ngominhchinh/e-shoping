@@ -20,7 +20,7 @@ export default function Nav(){
             <div>
                 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top mb-3">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">EShop</a>
+                        <Link class="navbar-brand" to={"/products"}>EShop</Link>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
@@ -37,9 +37,9 @@ export default function Nav(){
                                     Category
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><Link className="dropdown-item" value="0" onClick={()=>setCxt({selectedCategoryId:0})}>All</Link></li>
+                                    <li><Link to={'/products'} className="dropdown-item" value="0" onClick={()=>setCxt({selectedCategoryId:0})}>All</Link></li>
                                     {categories.map(item =>(
-                                        <li><Link  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
+                                        <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({...cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
                                     ))}
                                     
                                 </ul>
