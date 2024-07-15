@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import { MyContext } from "../../../MyContext";
+import Sort from "../../../components/Sort";
 
 export default function ListProduct(){
     let navigate = useNavigate();
@@ -15,15 +16,14 @@ export default function ListProduct(){
             name:""
         },
         images:[]
-    }])
-   
-   
+    }])      
 
     let getList = () =>{
         axios.get('http://localhost:3000/products').then((res) =>{
             let list = res.data;
             if(cxt.searchValue != null){
                 let nlist = list.filter(e => e.name.toLowerCase().includes(cxt.searchValue.toLowerCase()));
+                
                 setList(nlist);
             } else{
                 if(Number(cxt.selectedCategoryId) == 0 ){
@@ -55,6 +55,7 @@ export default function ListProduct(){
         <>
             <h1>{cxt.selectedCategoryId}</h1>
             <h1>{cxt.searchValue}</h1>
+            <Sort></Sort>
             {/* <h4>Xin chao: {cxt.currentUser.username}</h4> */}
             <div className="row mt-5">           
                 {                                   

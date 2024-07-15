@@ -1,6 +1,7 @@
 import Footer from "../../../components/Footer";
 import Nav from "../../../components/Nav";
 import { Routes, Route, Outlet } from "react-router-dom";
+import Sort from "../../../components/Sort";
 
 
 
@@ -11,7 +12,8 @@ export default function Home(){
             <Nav></Nav>
   
              
-                <div className="container mt-5">
+                <div className="container mt-3 ">
+                    
                     <Outlet></Outlet>
                 </div>
             

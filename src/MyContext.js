@@ -6,6 +6,7 @@ export const MyProvider = ({ children }) => {
     const [state, setState] = useState({
         selectedCategoryId:'0',
         searchValue:''
+        
 
     });
     const updateState = (state) => {

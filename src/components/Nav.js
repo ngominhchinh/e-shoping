@@ -18,7 +18,7 @@ export default function Nav(){
         <>
                     
             <div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top mb-3">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary fixed mb-3">
                     <div class="container-fluid">
                         <Link class="navbar-brand" to={"/products"}>EShop</Link>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,20 +39,19 @@ export default function Nav(){
                                 <ul class="dropdown-menu">
                                     <li><Link to={'/products'} className="dropdown-item" value="0" onClick={()=>setCxt({selectedCategoryId:0})}>All</Link></li>
                                     {categories.map(item =>(
-                                        <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({...cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
+                                        <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
                                     ))}
                                     
                                 </ul>
                             </li>
+                            
                             <li class="nav-item">
                             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
-                            <button class="btn btn-outline-success" type="submit" >
-                                Search
-                            </button>
+                            <input style={{width:'400px'}} class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
+                            
                         </form>
                         </div>
                     </div>
