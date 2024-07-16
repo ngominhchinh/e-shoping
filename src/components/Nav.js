@@ -18,7 +18,7 @@ export default function Nav(){
         <>
                     
             <div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary fixed mb-3">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary  mb-3">
                     <div class="container-fluid">
                         <Link class="navbar-brand" to={"/products"}>EShop</Link>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@ export default function Nav(){
                         </ul>
                         <form class="d-flex" role="search">
                             <input style={{width:'400px'}} class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
-                            
+                            {/* <p className="mt-3">Xin chao: {cxt.currentUser.username}</p> */}
                         </form>
                         </div>
                     </div>

@@ -5,8 +5,8 @@ export const MyContext = createContext();
 export const MyProvider = ({ children }) => {
     const [state, setState] = useState({
         selectedCategoryId:'0',
-        searchValue:''
-        
+        searchValue:'',
+        sort:''
 
     });
     const updateState = (state) => {

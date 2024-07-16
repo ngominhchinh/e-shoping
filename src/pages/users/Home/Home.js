@@ -1,7 +1,6 @@
 import Footer from "../../../components/Footer";
 import Nav from "../../../components/Nav";
 import { Routes, Route, Outlet } from "react-router-dom";
-import Sort from "../../../components/Sort";
 
 
 

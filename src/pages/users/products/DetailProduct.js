@@ -24,15 +24,14 @@ export default function DetailProduct() {
         <div className="row">
           <div className="col-2">
           </div>
+
           <div className="col-4">            
             <MDBCarousel showControls showIndicators interval={2500}>
                 {data.images.map((image,index)=>(
                     <MDBCarouselItem itemId={index}>
                       <img src={"/images/"+ image} className='d-block w-100' alt={image}  />                                                      
-                  </MDBCarouselItem>     
-                             
-                ))}
-                
+                  </MDBCarouselItem>                                 
+                ))}                
             </MDBCarousel>             
           </div>
           <div className="col-4 mx-auto my-auto">
@@ -41,10 +40,9 @@ export default function DetailProduct() {
             <h6>Category: {data.category.name}</h6>
             <button className="btn btn-primary">Add to Cart</button>
           </div>
+
           <div className="col-2">
-          </div>
-          
-         
+          </div>                   
         </div>                       
     </>
   );
