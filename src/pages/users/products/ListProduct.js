@@ -14,7 +14,6 @@ export default function ListProduct(){
         let n = [...array]           
        return n.sort((a,b) => b.price - a.price);        
     }
-
     let [list, setList] = useState([{
         name:"",
         price:"",
@@ -24,7 +23,6 @@ export default function ListProduct(){
         },
         images:[]
     }])      
-
     let getList = () =>{
         axios.get('http://localhost:3000/products').then((res) =>{
             let list = res.data;
@@ -50,10 +48,7 @@ export default function ListProduct(){
 
             setList(showList);
         })
-    }    
-
-    
-
+    }        
     useEffect(()=>{
         getList();
     })   
