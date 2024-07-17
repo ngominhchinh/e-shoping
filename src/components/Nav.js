@@ -2,17 +2,17 @@ import { useContext, useEffect, useState } from "react"
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { MyContext } from "../MyContext";
+
 export default function Nav(){
 
-    let[categories, setCategories] = useState([]);
+    let[categories, setCategories] = useState([]);    
+    let [cxt, setCxt] = useContext(MyContext);    
+
     useEffect(()=>{
         axios.get('http://localhost:3000/categories').then(x =>{
-            setCategories(x.data);
-            
+            setCategories(x.data);            
         })
-    })
-    let [cxt, setCxt] = useContext(MyContext);
-    
+    },[])        
     
     return(
         <>
@@ -40,18 +40,14 @@ export default function Nav(){
                                     <li><Link to={'/products'} className="dropdown-item" value="0" onClick={()=>setCxt({selectedCategoryId:0})}>All</Link></li>
                                     {categories.map(item =>(
                                         <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
-                                    ))}
-                                    
+                                    ))}                                    
                                 </ul>
-                            </li>
+                            </li>                            
                             
-                            <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                            </li>
                         </ul>
                         <form class="d-flex" role="search">
-                            <input style={{width:'400px'}} class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
-                            {/* <p className="mt-3">Xin chao: {cxt.currentUser.username}</p> */}
+                            <input style={{width:'400px'}} class="form-control me-3" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
+                            <p className="mt-3">Xin chào: {} </p>
                         </form>
                         </div>
                     </div>

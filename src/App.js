@@ -11,7 +11,7 @@ import { useContext } from 'react';
 import Cart from './pages/users/Cart/Cart';
 
 function App() {
-  const ct = useContext(MyContext);
+  // const ct = useContext(MyContext);
   return (
     <>
         <Routes>
@@ -20,8 +20,7 @@ function App() {
           <Route path='cart' element={<Cart/>}></Route>
           <Route path="products" element={<Home />}>
             <Route path="" element={<ListProduct />}></Route>
-            <Route path='detail/:id' element={<DetailProduct/>}></Route>
-            
+            <Route path='detail/:id' element={<DetailProduct/>}></Route>            
           </Route>
           
         </Routes>
