@@ -29,7 +29,7 @@ export default function Login() {
                 .post("http://localhost:3000/users/login", values)
                 .then((x) => {
                   alert("Đăng nhập thành công!");
-                  
+                  setCxt({...cxt,currentUser:values});
                   navigate("/products");
                   localStorage.setItem("user", JSON.stringify(x.data));
                 })

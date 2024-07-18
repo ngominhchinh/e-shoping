@@ -20,28 +20,22 @@ export default function ListProduct(){
     let getList = () =>{
         axios.get('http://localhost:3000/products').then((res) =>{
             let list = res.data;
-            let nlist;            
-            if(cxt.searchValue != null){
-                nlist = list.filter(e => e.name.toLowerCase().includes(cxt.searchValue.toLowerCase()));                  
+            let nlist;        
+            if(Number(cxt.selectedCategoryId) == 0 ){
+                nlist = [...list];
             } else{
-                if(Number(cxt.selectedCategoryId) == 0 ){
-                    nlist = [...list];
-                } else{
-                    nlist = list.filter(e => e.category.id == Number(cxt.selectedCategoryId));
-                }          
-            }       
-            if(Number(selected)==1){
-                nlist.sort((a, b) => a.price - b.price);
-            }else if(Number(selected) ==2){
-                nlist.sort((a, b) => b.price - a.price);
+                nlist = list.filter(e => e.category.id == Number(cxt.selectedCategoryId));
+            }        
+            if(cxt.searchValue!= ""){
+                nlist = nlist.filter(e => e.name.toLowerCase().includes(cxt.searchValue.toLowerCase()));
             }
             
             setList(nlist);
-        },[selected])
+        })
     }        
     useEffect(()=>{
         getList();
-    })   
+    },[cxt])   
     
 
     return(

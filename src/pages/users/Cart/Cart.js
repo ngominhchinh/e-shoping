@@ -2,6 +2,7 @@ import React from "react";
 import {  MDBBtn,  MDBCard,  MDBCardBody,  MDBCardImage,  MDBCol,  MDBContainer,  MDBIcon,  MDBRow,} from "mdb-react-ui-kit";
 import Nav from "../../../components/Nav";
 export default function Cart(){
+    
     return(
         <>
         <Nav></Nav>

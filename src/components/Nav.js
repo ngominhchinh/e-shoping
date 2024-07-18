@@ -37,9 +37,9 @@ export default function Nav(){
                                     Category
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><Link to={'/products'} className="dropdown-item" value="0" onClick={()=>setCxt({selectedCategoryId:0})}>All</Link></li>
+                                    <li><Link to={'/products'} className="dropdown-item" value="0" onClick={()=>setCxt({...cxt,selectedCategoryId:0})}>All</Link></li>
                                     {categories.map(item =>(
-                                        <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
+                                        <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({...cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
                                     ))}                                    
                                 </ul>
                             </li>                            
@@ -47,7 +47,7 @@ export default function Nav(){
                         </ul>
                         <form class="d-flex" role="search">
                             <input style={{width:'400px'}} class="form-control me-3" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
-                            <p className="mt-3">Xin chào: {} </p>
+                            <p className="mt-3">Xin chào: {cxt.currentUser.username} </p>
                         </form>
                         </div>
                     </div>

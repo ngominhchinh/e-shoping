@@ -12,6 +12,12 @@ import Cart from './pages/users/Cart/Cart';
 
 function App() {
   // const ct = useContext(MyContext);
+  // let [cxt, setCxt] = useContext(MyContext);
+  // const storedUser = localStorage.getItem('user');
+  // if(storedUser){
+  //   const user = JSON.parse(storedUser);
+  //   setCxt({...cxt, currentUser: user});
+  // }
   return (
     <>
         <Routes>
