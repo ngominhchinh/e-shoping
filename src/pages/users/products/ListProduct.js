@@ -29,22 +29,27 @@ export default function ListProduct(){
             if(cxt.searchValue!= ""){
                 nlist = nlist.filter(e => e.name.toLowerCase().includes(cxt.searchValue.toLowerCase()));
             }
+            if(selected == '1'){
+                nlist = nlist.sort((a, b) => a.price - b.price);
+               
+            } else if(selected =='2'){
+                nlist = nlist.sort((a, b) => b.price - a.price);
+                
+            }
             
             setList(nlist);
         })
     }        
     useEffect(()=>{
         getList();
-    },[cxt])   
+        
+    },[cxt,selected])   
     
 
     return(
-        <>
-            <h1>{cxt.selectedCategoryId}</h1>
-            <h1>{cxt.searchValue}</h1>     
-            {/* <p className="mt-3">Xin chào: {cxt.user.username} </p>       */}
-            <div className="col-2">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" onChange={(e)=>{setSelected(e.target.value);}}>                   
+        <>            
+            <div className="col-2 mt-5 ">
+                <select className="form-select" id="floatingSelect" aria-label="Floating label select example" onChange={(e)=>{setSelected(e.target.value);}}>                   
                     <option value="0">Default</option>
                     <option value="1">Low to high</option>
                     <option value="2">High to low</option>
@@ -56,11 +61,11 @@ export default function ListProduct(){
                 {                                   
                     list.map((e) => (
                     <div className="col-3 mt-3">
-                        <div class="card" style={{width: '18rem'}}>
-                            <img src={"images/"+e.images[0]} class="card-img-top" alt="..."/>
-                            <div class="card-body text-center">
-                                <h5 class="card-title">{e.name}</h5>                                
-                                <Link class="btn btn-primary"
+                        <div className="card" style={{width: '18rem'}}>
+                            <img src={"images/"+e.images[0]} className="card-img-top" alt="..."/>
+                            <div className="card-body text-center">
+                                <h5 className="card-title">{e.name}</h5>                                
+                                <Link className="btn btn-primary"
                                     to = {'detail/' + e.id}
                                 >Detail</Link>
                             </div>

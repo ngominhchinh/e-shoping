@@ -1,9 +1,11 @@
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
 import { MDBCarousel, MDBCarouselItem } from 'mdb-react-ui-kit';
 import axios from "axios";
+import { MyContext } from "../../../MyContext";
 export default function DetailProduct() {
   let {id} = useParams('');
+  let [cxt, setCxt] = useContext(MyContext);  
   let [data, setData] = useState({
     name:"",
     price:"",
@@ -14,10 +16,9 @@ export default function DetailProduct() {
 
   useEffect(()=>{
     axios.get('http://localhost:3000/products/' + id).then(res =>{
-      setData(res.data);
-    })
-  },[])
-  
+      setData(res.data);      
+    })           
+  },[])  
   
   return (
     <>        
@@ -38,7 +39,9 @@ export default function DetailProduct() {
             <h3>{data.name}</h3>
             <h6>Price: ${data.price}</h6>
             <h6>Category: {data.category.name}</h6>
-            <button className="btn btn-primary">Add to Cart</button>
+            {cxt.user.user?(
+              <button className="btn btn-primary">Add to Cart</button>
+            ):(<Link to={'/'} className="btn btn-primary">Add </Link>)}
           </div>
 
           <div className="col-2">

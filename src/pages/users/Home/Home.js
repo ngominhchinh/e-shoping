@@ -11,7 +11,7 @@ export default function Home(){
             <Nav></Nav>
   
              
-                <div className="container mt-3 ">
+                <div className="container pt-5 ">
                     
                     <Outlet></Outlet>
                 </div>

@@ -6,48 +6,68 @@ import { MyContext } from "../MyContext";
 export default function Nav(){
 
     let[categories, setCategories] = useState([]);    
+    let[selectedCategoryId,setSelectedCategoryId] = useState(0)
     let [cxt, setCxt] = useContext(MyContext);    
+    let [userin, setUserin] = useState(null);
 
+    
     useEffect(()=>{
         axios.get('http://localhost:3000/categories').then(x =>{
             setCategories(x.data);            
-        })
-    },[])        
-    
+        })    
+        const user =  JSON.parse(sessionStorage.getItem('user'));       
+        if (user){
+            setUserin(user);           
+            setCxt({...cxt, user:user});
+        }
+    },[])   
+       
+  
     return(
         <>
                     
             <div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary  mb-3">
-                    <div class="container-fluid">
-                        <Link class="navbar-brand" to={"/products"}>EShop</Link>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top mb-3">
+                    <div className="container-fluid">
+                        <Link className="navbar-brand" to={"/products"}>EShop</Link>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">Link</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Category
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul className="dropdown-menu">
                                     <li><Link to={'/products'} className="dropdown-item" value="0" onClick={()=>setCxt({...cxt,selectedCategoryId:0})}>All</Link></li>
                                     {categories.map(item =>(
-                                        <li><Link to={'/products'}  class="dropdown-item" value={item.id}  onClick={(e)=> setCxt({...cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
+                                        <li><Link to={'/products'}  className="dropdown-item" value={item.id}  onClick={(e)=> setCxt({...cxt,selectedCategoryId: item.id})}>{item.name}</Link></li>
                                     ))}                                    
                                 </ul>
-                            </li>                            
+                            </li>   
+                            <li className="nav-item">
+                            {userin?(
+                                     <Link to={'/cart'} className="nav-link ">Cart</Link>
+                                    ):(<Link to={'/'} className="nav-link ">Cart chua login</Link>)}
+                               
+                            </li>                         
                             
                         </ul>
-                        <form class="d-flex" role="search">
-                            <input style={{width:'400px'}} class="form-control me-3" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
-                            <p className="mt-3">Xin chào: {cxt.currentUser.username} </p>
+                        <form className="d-flex" role="search">
+                            <input style={{width:'400px'}} className="form-control me-3" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
+                            {userin ? (
+                                 <p className="mt-3">Xin chào: {userin.user.username} </p>
+                            ):(<p className="mt-3"></p>)}
+                               
+                            
+                            
                         </form>
                         </div>
                     </div>

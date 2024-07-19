@@ -6,9 +6,7 @@ import { useContext, useState } from 'react';
 import { MyContext } from '../MyContext';
 
 export default function Login() {
-    let navigate = useNavigate();
-    
-    let [cxt, setCxt] = useContext(MyContext);        
+    let navigate = useNavigate();        
     
   return (
     <>
@@ -29,9 +27,9 @@ export default function Login() {
                 .post("http://localhost:3000/users/login", values)
                 .then((x) => {
                   alert("Đăng nhập thành công!");
-                  setCxt({...cxt,currentUser:values});
+                  
                   navigate("/products");
-                  localStorage.setItem("user", JSON.stringify(x.data));
+                  sessionStorage.setItem("user", JSON.stringify(x.data));
                 })
                 .catch((e) => {
                   alert("Tài khoản hoặc mật khẩu sai!");
