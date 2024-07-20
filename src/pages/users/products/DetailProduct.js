@@ -6,6 +6,7 @@ import { MyContext } from "../../../MyContext";
 export default function DetailProduct() {
   let {id} = useParams('');
   let [cxt, setCxt] = useContext(MyContext);  
+  const user =  JSON.parse(sessionStorage.getItem('user'));
   let [data, setData] = useState({
     name:"",
     price:"",
@@ -14,6 +15,16 @@ export default function DetailProduct() {
     images:[]
   });
 
+  // let [cart, setCart] = useState({
+  //   user: { 
+  //     id: '', 
+  //     username: ''
+  //   },
+  //   total: '',
+  //   date: '',
+  //   products: []
+  // })
+ 
   useEffect(()=>{
     axios.get('http://localhost:3000/products/' + id).then(res =>{
       setData(res.data);      
@@ -22,7 +33,7 @@ export default function DetailProduct() {
   
   return (
     <>        
-        <div className="row">
+        <div className="row pt-5">
           <div className="col-2">
           </div>
 
@@ -39,14 +50,44 @@ export default function DetailProduct() {
             <h3>{data.name}</h3>
             <h6>Price: ${data.price}</h6>
             <h6>Category: {data.category.name}</h6>
-            {cxt.user.user?(
-              <button className="btn btn-primary">Add to Cart</button>
+            {user.user?(
+
+              <button className="btn btn-primary" onClick={() =>{                
+                let c = {
+                  user: { 
+                    id: user.user.id, 
+                    username: user.user.username
+                  },
+                  total: data.price*1,
+                  date: "",
+                  products: [{
+                    id: data.id,
+                    name: data.name,
+                    price: data.price,
+                    quantity: 1
+                  }]
+                }
+                axios.post('http://localhost:3000/carts',c).then((res) =>{
+                  
+                  alert('Add to cart success');
+                }).catch(err =>{
+                  alert('Add to cart failed');
+                })
+
+              }}>Add to Cart</button>
+
             ):(<Link to={'/'} className="btn btn-primary">Add </Link>)}
           </div>
 
-          <div className="col-2">
+          <div className="col-2">           
           </div>                   
-        </div>                       
+          
+        </div>  
+        
+        <p>User Id: {user.user.id}</p>      
+        <p>Username: Id: {user.user.id} - name:{user.user.username}</p>    
+        <p>Product: id: {data.id} - name: {data.name} - price: {data.price} - quantity: {1}</p>
+        <p>Total: {data.price*1}</p>
     </>
   );
 }

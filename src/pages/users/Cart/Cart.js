@@ -1,132 +1,81 @@
 import React, { useContext, useEffect, useState } from "react";
-import {  MDBBtn,  MDBCard,  MDBCardBody,  MDBCardImage,  MDBCol,  MDBContainer,  MDBIcon,  MDBRow,} from "mdb-react-ui-kit";
 import Nav from "../../../components/Nav";
 import { MyContext } from "../../../MyContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 export default function Cart(){
-    let [cxt,setCxt] = useContext(MyContext);
-    let [listProduct,setListProduct] = useState([]);
-    let [cart, setCart] = useState([]);
-    let usr = JSON.parse(sessionStorage.getItem('user'));
-    let id = usr.user.id;
     
-    useEffect(()=>{
-        axios.get(`http://localhost:3000/carts/${id}`).then((res) =>{
-            let list = res.data;            
-            setCart(list);
-            setListProduct(list.products);
+    let [productsInCart,setProductsInCart] = useState([]);
+    let [cart, setCart] = useState([]);   
+    let id = null;
+    const user =  JSON.parse(sessionStorage.getItem('user'));
+    if(user){
+        id = user.user.id;
+    }    
+    let totalPrice = 0;
+    useEffect(()=>{        
+        axios.get('http://localhost:3000/carts/'+id).then((res) =>{                        
+            setCart(res.data);
+            setProductsInCart(res.data.products)            
         })
-    },[])
+    },[]);    
+    
     return(
         <>
            <Nav></Nav>
-           <h1>{cart.total}</h1>
-           {/* <section className="h-100 h-custom" style={{backgroundColor: '#d2c9ff'}}>
-            <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col-12">
-                        <div className="card card-registration card-registration-2" style={{borderRadius: '15px'}}>
-                            <div className="card-body p-0">
-                                <div className="row g-0">
-                                    <div className="col-lg-8">
-                                        <div className="p-5">
-                                            <div className="d-flex justify-content-between align-items-center mb-5">
-                                                <h1 className="fw-bold mb-0">Shopping Cart</h1>
-                                                <h6 className="mb-0 text-muted">3 items</h6>
-                                            </div>
+           <div className="pt-5">
+                <h1 className="mt-5">Cart</h1>
+                <h4>Tong tien: {cart.total} - item: {productsInCart.length}</h4>
 
-                                            <hr className="my-4"/>
-
-
-
-
-                                             
-
-                                            <div className="row mb-4 d-flex justify-content-between align-items-center">
-                                                <div className="col-md-2 col-lg-2 col-xl-2">
-                                                    <img  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp" className="img-fluid rounded-3" alt="Cotton T-shirt"/>
-                                                </div>
-                                                <div className="col-md-3 col-lg-3 col-xl-3">
-                                                    <h6 className="text-muted">Shirt</h6>
-                                                    <h6 className="mb-0">Cotton T-shirt</h6>
-                                                </div>
-                                                <div className="col-md-3 col-lg-3 col-xl-2 d-flex">                                
-                                                    <input id="form1" min="0" name="quantity" step="1" type="number"  className="form-control form-control-sm" />                                
-                                                </div>
-                                                <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                    <h6 className="mb-0">€ 44.00</h6>
-                                                </div>
-                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                    <a href="#!" className="text-muted"><i className="fas fa-times"></i></a>
-                                                </div>
-                                            </div>
-                                            <hr className="my-4"/>
-
-                                               
-
-
-
-
-
+                <div className="p-5">
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
                             
-                            <div className="pt-5">
-                                <h6 className="mb-0">
-                                    <Link to={'/products'} className="text-body">
-                                        <i className="fas fa-long-arrow-alt-left me-2"></i>Back to shop
-                                    </Link>
-                                </h6>
-                            </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 bg-body-tertiary">
-                            <div className="p-5">
-                                <h3 className="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                            <hr className="my-4"/>
-
-                            <div className="d-flex justify-content-between mb-4">
-                                <h5 className="text-uppercase">items 3</h5>
-                                <h5>€ 132.00</h5>
-                            </div>
-
-                            <h5 className="text-uppercase mb-3">Shipping</h5>
-
-                            <div className="mb-4 pb-2">
-                                <select data-mdb-select-init>
-                                <option value="1">Standard-Delivery- €5.00</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                                <option value="4">Four</option>
-                                </select>
-                            </div>
-
-                            <h5 className="text-uppercase mb-3">Give code</h5>
-
-                            <div className="mb-5">
-                                <div data-mdb-input-init className="form-outline">
-                                <input type="text" id="form3Examplea2" className="form-control form-control-lg" />
-                                <label className="form-label" for="form3Examplea2">Enter your code</label>
-                                </div>
-                            </div>
-
-                            <hr className="my-4"/>
-
-                            <div className="d-flex justify-content-between mb-5">
-                                <h5 className="text-uppercase">Total price</h5>
-                                <h5>€ 137.00</h5>
-                            </div>
-
-                            <button  type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-dark btn-block btn-lg"
-                                data-mdb-ripple-color="dark">Register</button>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
+                            <th className="col">Name</th>
+                            <th className="col">Unit price</th>
+                            <th className="col">Quantity</th>
+                            <th className="col">Price</th>
+                            <th className="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                            {productsInCart.map((p,index) =>{
+                                let t = p.quantity*p.price;
+                                totalPrice += t;
+                                return (
+                                    <tr key={p.id}>
+                                        <td>{p.name}</td>
+                                        <td>{p.price}</td>
+                                        <td>{p.quantity}</td>
+                                        <td>{p.price * p.quantity}</td>
+                                        <td><button className="btn btn-outline-danger" onClick={()=>{
+                                            axios.delete(`http://localhost:3000/carts/${user.user.id}/${p.id}`).then((res)=>{
+                                                alert('Delete Successed');
+                                                setCart(res.data);
+                                                setProductsInCart(res.data.products)   
+                                            }).catch((err)=>{
+                                                alert('Delete failed');
+                                            })
+                                        }}><i className="fa-solid fa-trash"></i></button></td>
+                                        
+                                    </tr>
+                                )
+                                 
+                            })}
+                            <tr>
+                                <td colSpan="3" className="text-right "><strong>Total</strong></td>
+                                <td colSpan="3"><strong>${totalPrice}</strong></td>
+                            </tr>
+                       
+                    </tbody>
+                </table>
                 </div>
-                </div>
-            </div>
-            </section> */}
+                
+
+           </div>           
+           
         </>
     )
 }
