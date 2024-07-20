@@ -10,6 +10,8 @@ import Admin from './pages/admin/Admin';
 import ListUsers from './pages/admin/users/ListUsers';
 import ListCarts from './pages/admin/carts/ListCarts';
 import Products from './pages/admin/products/Products';
+import AddProduct from './pages/admin/products/AddProduct';
+import EditProduct from './pages/admin/products/EditProduct';
 
 function App() {
   
@@ -26,7 +28,10 @@ function App() {
           <Route path='admin' element={<Admin></Admin>}>
             <Route path='users' element={<ListUsers></ListUsers>}></Route>
             <Route path='carts' element={<ListCarts></ListCarts>}></Route>
-            <Route path='products' element={<Products></Products>}></Route>
+            <Route path='products' element={<Products></Products>}>
+              <Route path='add' element={<AddProduct></AddProduct>}></Route>
+              <Route path='edit/:id' element = {<EditProduct></EditProduct>}></Route>
+            </Route>
           </Route>
             
         </Routes>

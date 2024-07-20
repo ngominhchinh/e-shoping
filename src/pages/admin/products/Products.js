@@ -17,6 +17,7 @@ export default function Products(){
     return (
         <>
             <div className="container">
+                <button ><Link to={'add'}>Add Product</Link></button>
                 <table className="table table-hover">
                     <thead>
                         <tr>  
@@ -36,7 +37,7 @@ export default function Products(){
                                 <td>{x.category.name}</td>
                                 <td>
                                     <button className="btn btn-outline-primary">
-                                        <Link to={'edit/' + x.id}> Edit</Link>
+                                        <Link style={{ color: 'black', textDecoration: 'none' }}  to={'edit/' + x.id}> Edit</Link>
                                         
                                     </button> &nbsp;
 

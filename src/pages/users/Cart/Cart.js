@@ -6,7 +6,13 @@ import axios from "axios";
 export default function Cart(){
     
     let [productsInCart,setProductsInCart] = useState([]);
-    let [cart, setCart] = useState([]);   
+    let [cart, setCart] = useState([{
+        id:'',
+        user:'',
+        total:'',
+        date:'',
+        products:[]
+    }]);   
     let id = null;
     const user =  JSON.parse(sessionStorage.getItem('user'));
     if(user){
@@ -14,7 +20,8 @@ export default function Cart(){
     }    
     let totalPrice = 0;
     useEffect(()=>{        
-        axios.get('http://localhost:3000/carts/'+id).then((res) =>{                        
+        axios.get('http://localhost:3000/carts/user/'+user.user.id).then((res) =>{    
+            console.log(id);                    
             setCart(res.data);
             setProductsInCart(res.data.products)            
         })
