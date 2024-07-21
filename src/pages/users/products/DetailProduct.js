@@ -35,6 +35,11 @@ export default function DetailProduct() {
     <>        
         <div className="row pt-5">
           <div className="col-2">
+          {data.images.map((image,index)=>(
+                   
+                      <img src={image} className='d-block w-100 m-3' alt={image} style={{height:"100px"}} />                                                      
+                                           
+                ))}                
           </div>
 
           <div className="col-4">            

@@ -33,9 +33,9 @@ export default function AddProduct(){
         });
     
         try {
-          const urls = await Promise.all(uploadPromises);
-          setImageUrls((prevUrls) => [...prevUrls, ...urls]);
-         
+            const urls = await Promise.all(uploadPromises);
+            setImageUrls((prevUrls) => [...prevUrls, ...urls]);
+            alert('Uploaded Firebase');
         } catch (error) {
           console.log("Error uploading images:", error);
         }
