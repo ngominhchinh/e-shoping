@@ -7,7 +7,7 @@ import { MyContext } from '../MyContext';
 
 export default function Login() {
     let navigate = useNavigate();        
-    
+    let [cxt, setCxt] = useContext(MyContext);
   return (
     <>
       <div className="row mt-5 pt-5">

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MyContext } from "../MyContext";
 
 export default function Nav(){
@@ -9,21 +9,36 @@ export default function Nav(){
     let[selectedCategoryId,setSelectedCategoryId] = useState(0)
     let [cxt, setCxt] = useContext(MyContext);    
     let [userin, setUserin] = useState(null);
-    
+    let navigate = useNavigate();
+    // useEffect(()=>{
+    //     axios.get('http://localhost:3000/categories').then(x =>{
+    //         setCategories(x.data);            
+    //     })    
+    //     const user =  JSON.parse(sessionStorage.getItem('user'));       
+    //     if (user){
+    //         setUserin(user);           
+    //         setCxt({...cxt, user:user});
+    //     }
+    // },[])   
+    function findCart(user){
+        let all = axios.get('http://localhost:3000/carts').then((res) =>{
+            return res.data.find(x=>x.user.id == user.user.id);
+        })
+    }
+    let cart;
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if(user){
+        cart = findCart(user);                
+    }
     useEffect(()=>{
         axios.get('http://localhost:3000/categories').then(x =>{
             setCategories(x.data);            
-        })    
-        const user =  JSON.parse(sessionStorage.getItem('user'));       
-        if (user){
-            setUserin(user);           
-            setCxt({...cxt, user:user});
-        }
-    },[])          
-  
+        });     
+         
+    },[cart])   
     return(
         <>
-                    
+                  
             <div>
                 <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top mb-3 p-3">
                     <div className="container-fluid">
@@ -35,6 +50,7 @@ export default function Nav(){
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="#">Home</a>
+                                
                             </li>
                             
                             <li className="nav-item dropdown">
@@ -64,22 +80,24 @@ export default function Nav(){
                         </ul>
                         <form className="d-flex mr-5" role="search">
                             <input style={{width:'400px'}} className="form-control m-1" type="search" placeholder="Search" aria-label="Search" onChange={(e) =>{setCxt({...cxt,searchValue:e.target.value})}}/>
-                            {userin ? (
-                                 <p className="mt-2">Xin chào: {userin.user.username} </p>
+                            {user  ? (
+                                 <p className="mt-2">Xin chào: {user.user.username} </p>
                                  
                             ):(<p className="mt-2"></p>)}                                                         
                             
                         </form>
                         
                         </div>
-                        {userin?(
-                            <button className="btn btn-outline-success"><Link to={'/cart'}><i className="fa-solid fa-cart-shopping"></i></Link></button>
-                            ):(<Link to={'/'} className="nav-link ">Login</Link>)}
+                        {user?(<>
+                            <button style={{ outline: 'none' }} type="button" className="btn"><Link to={'/cart'}><i className="fa-solid fa-cart-shopping"></i></Link></button>
+                            <button className="btn btn-outline-primary" onClick={() => {sessionStorage.removeItem('user'); navigate('/')}}>Logout</button></>)                            
+                            : (<button><Link to={'/'} className="nav-link ">Register</Link></button>
+                        )}
                         
                     </div>
                 </nav>
             </div>
-            {}
+            
         </>
     )
 }

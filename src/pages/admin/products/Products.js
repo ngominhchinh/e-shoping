@@ -16,6 +16,7 @@ export default function Products(){
     },[])
     return (
         <>
+            <h1 className="text-center">List product</h1>
             <div className="container">
                 <button ><Link to={'add'}>Add Product</Link></button>
                 <table className="table table-hover">
@@ -36,10 +37,9 @@ export default function Products(){
                                 <td>{x.quantity}</td>
                                 <td>{x.category.name}</td>
                                 <td>
-                                    <button className="btn btn-outline-primary">
-                                        <Link style={{ color: 'black', textDecoration: 'none' }}  to={'edit/' + x.id}> Edit</Link>
-                                        
-                                    </button> &nbsp;
+                                    <Link style={{ color: 'black', textDecoration: 'none' }}  to={'edit/' + x.id}>
+                                    <button className="btn btn-outline-primary"> Edit </button>
+                                    </Link> &nbsp;
 
                                     <button className="btn btn-outline-danger" onClick={() => {
                                         if(window.confirm("Are you sure you want to delete?")){

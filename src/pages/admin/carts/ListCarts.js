@@ -14,7 +14,8 @@ export default function ListCarts(){
         getAllCarts();
     },[])
     return (
-        <>
+        <> 
+        <h1 className="text-center">List Carts</h1>
             <div className="container">
                 <table className="table table-hover">
                     <thead>

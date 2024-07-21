@@ -60,7 +60,7 @@ export default function ListProduct(){
                                        
             <div className="row mt-5">           
                 {                                   
-                    list.map((e) => (
+                    list.map(e => (
                     <div className="col-3 mt-3">
                         <div className="card" style={{width: '18rem'}}>
                             <Link to = {'detail/' + e.id}> <img src={"images/"+e.images[0]} className="card-img-top" alt="..."/> </Link>

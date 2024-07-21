@@ -6,7 +6,7 @@ import { MyContext } from "../../../MyContext";
 export default function DetailProduct() {
   let {id} = useParams('');
   let [cxt, setCxt] = useContext(MyContext);  
-  const user =  JSON.parse(sessionStorage.getItem('user'));
+  let user =  JSON.parse(sessionStorage.getItem('user'));
   let [data, setData] = useState({
     name:"",
     price:"",
@@ -51,7 +51,6 @@ export default function DetailProduct() {
             <h6>Price: ${data.price}</h6>
             <h6>Category: {data.category.name}</h6>
             {user.user?(
-
               <button className="btn btn-primary" onClick={() =>{                
                 let c = {
                   user: { 

@@ -7,16 +7,13 @@ import { Routes, Route, Outlet } from "react-router-dom";
 export default function Home(){
     return (
         <>     
-          
-            <Nav></Nav>
-  
-             
-                <div className="container pt-5 ">
-                    
+            <div className="container-fluid">
+                <Nav></Nav>               
+                <div className="container pt-5 ">      
                     <Outlet></Outlet>
                 </div>
-            
-            <Footer></Footer>                                 
+                <Footer></Footer>       
+            </div>                                     
         </>
     )
 }

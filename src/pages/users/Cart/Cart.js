@@ -5,7 +5,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 export default function Cart(){
     
-    let [productsInCart,setProductsInCart] = useState([]);
+    let [productsInCart,setProductsInCart] = useState([{
+        id:'',
+        name:'',
+        price:'',
+        quantity:'',
+        total:''
+    }]);
     let [cart, setCart] = useState([{
         id:'',
         user:'',
@@ -58,13 +64,15 @@ export default function Cart(){
                                         <td>{p.quantity}</td>
                                         <td>{p.price * p.quantity}</td>
                                         <td><button className="btn btn-outline-danger" onClick={()=>{
-                                            axios.delete(`http://localhost:3000/carts/${user.user.id}/${p.id}`).then((res)=>{
-                                                alert('Delete Successed');
-                                                setCart(res.data);
-                                                setProductsInCart(res.data.products)   
-                                            }).catch((err)=>{
-                                                alert('Delete failed');
-                                            })
+                                            if(window.confirm("Are you sure you want to delete?")){
+                                                axios.delete(`http://localhost:3000/carts/${user.user.id}/${p.id}`).then((res)=>{
+                                                    alert('Delete Successed');
+                                                    setCart(res.data);
+                                                    setProductsInCart(res.data.products)   
+                                                }).catch((err)=>{
+                                                    alert('Delete failed');
+                                                })
+                                            }                                            
                                         }}><i className="fa-solid fa-trash"></i></button></td>
                                         
                                     </tr>
