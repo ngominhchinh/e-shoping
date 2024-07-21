@@ -9,9 +9,9 @@ import { v4 } from "uuid";
 export default function AddProduct(){
     let [categories, setCategories] = useState([]);
     let [selected, setSelected] = useState(0);
-   
+
     let [images, setImages] = useState([]);
-    const [imageUrls, setImageUrls] = useState([]);
+    let [urls, setUrls] = useState([]);
    
 
     let handleChange = (e) => {
@@ -21,25 +21,14 @@ export default function AddProduct(){
         }
     };
 
-    const handleUpload = async () => {      
-        const uploadPromises = images.map((image) => {
-          const imgRef = ref(imageDb, `files/${v4()}`);
-          return uploadBytes(imgRef, image)
-            .then((snapshot) => getDownloadURL(snapshot.ref))
-            .catch((error) => {
-              console.log("Error uploading image:", error);
-              throw error;
-            });
-        });
-    
-        try {
-          const urls = await Promise.all(uploadPromises);
-          setImageUrls((prevUrls) => [...prevUrls, ...urls]);
-         
-        } catch (error) {
-          console.log("Error uploading images:", error);
-        }
-        
+    let handleUpload = () => {        
+        images.map((image) => {
+            let imgRef =  ref(imageDb,`files/${v4()}`);           
+            uploadBytes(imgRef,image);   
+            getDownloadURL(imageDb).then(url =>{
+                setUrls(data => [...data,url]);
+            })          
+        })        
     };
    
     let renderFileList = () =>(
@@ -56,8 +45,8 @@ export default function AddProduct(){
             setCategories(item.data);
         })
        
-    },[]);    
-
+    },[]);
+    
     return (
         <>
             <div className="row">
@@ -72,17 +61,16 @@ export default function AddProduct(){
                         price:'',
                         category:{},
                         quantity:'',
-                        images:''
+                        images:[]
 
-                    }} onSubmit={(values) =>{
+                    }} onSubmit={ (values) =>{
                         handleUpload();
-                        
                         let category = categories.find(c => c.id == selected);
                         if(category === undefined){
                             category = categories[0];
                         }
-                        
-                        values = {...values,category,images:imageUrls};
+                        let arr = urls;
+                        values = {...values,category,arr}
                         
                         axios.post('http://localhost:3000/products',values).then((res) =>{
                             alert("Product added successfully");                            
@@ -95,10 +83,13 @@ export default function AddProduct(){
                             <Field className="form-control" name='name' placeholder="Enter product name here"/>
                             <Field className="form-control mt-3" name='price' type="number" step='1' placeholder="Enter product price here"/>
                             <Field className="form-control mt-3" name='quantity' type="number" step='1' placeholder="Enter product quantity here"/>
+
                             <select className="form-select mt-3" onChange={(e) => setSelected(e.target.value)}>
+
                                 {categories.map((x) =>(
                                     <option value={x.id}>{x.name}</option>
-                                ))}                                
+                                ))}
+                                
                             </select>
                             <input type="file" multiple accept="image/*"  onChange={handleChange}/>
                             {renderFileList()}                                                       
