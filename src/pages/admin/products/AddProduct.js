@@ -12,33 +12,42 @@ export default function AddProduct(){
 
     let [images, setImages] = useState([]);
     let [urls, setUrls] = useState([]);
+    let [progress, setProgress] = useState(0);
 
     let handleChange = (e) => {
         for (let i = 0; i < e.target.files.length; i++) {
-            let newImage = e.target.files[i];           
-            setImages([...images, newImage]);
-            console.log(images);
+            let newImage = e.target.files[i];
+            newImage["id"] = Math.random();
+            setImages((prevState) => [...prevState, newImage]);
         }
     };
 
-    let handleUpload = async () => {
-        const urlsArray = [];
-      
-        await Promise.all(
-          images.map((image) => {
-            let imgRef = ref(imageDb, `files/${v4()}`);
+    let handleUpload = () => {        
+        images.map((image) => {
+            let imgRef =  ref(imageDb,`files/${v4()}`);
+
             let uploadTask = uploadBytesResumable(imgRef, image);
-            
-            return uploadBytes(imgRef, image).then(() => {
-              return getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                urlsArray.push(url);
-              });
-            });
-          })
-        );
-      
-        setUrls([...urls, ...urlsArray]);
-      };
+
+            uploadBytes(imgRef,image).then(value=>{
+            console.log(value)
+            getDownloadURL(value.ref).then(url=>{
+                setUrls([...urls, url]);
+            })
+
+            uploadTask.on(
+                "state_changed",                
+                () => {
+                    // download url
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        setUrls((prevState) => [...prevState, url]);                        
+                    });
+                }
+            );
+
+        })
+        })
+        return urls;
+    };
 
     let renderFileList = () =>(
         <>
