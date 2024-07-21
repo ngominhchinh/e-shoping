@@ -41,7 +41,7 @@ export default function DetailProduct() {
             <MDBCarousel showControls showIndicators interval={2500}>
                 {data.images.map((image,index)=>(
                     <MDBCarouselItem itemId={index}>
-                      <img src={"/images/"+ image} className='d-block w-100' alt={image}  />                                                      
+                      <img src={image} className='d-block w-100' alt={image}  />                                                      
                   </MDBCarouselItem>                                 
                 ))}                
             </MDBCarousel>             

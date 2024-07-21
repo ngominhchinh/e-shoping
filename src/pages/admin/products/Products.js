@@ -18,7 +18,7 @@ export default function Products(){
         <>
             <h1 className="text-center">List product</h1>
             <div className="container">
-                <button ><Link to={'add'}>Add Product</Link></button>
+            <Link to={'add'}><button >Add Product</button></Link>
                 <table className="table table-hover">
                     <thead>
                         <tr>  

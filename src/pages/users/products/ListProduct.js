@@ -63,7 +63,7 @@ export default function ListProduct(){
                     list.map(e => (
                     <div className="col-3 mt-3">
                         <div className="card" style={{width: '18rem'}}>
-                            <Link to = {'detail/' + e.id}> <img src={"images/"+e.images[0]} className="card-img-top" alt="..."/> </Link>
+                            <Link to = {'detail/' + e.id}> <img src={e.images[0]} className="card-img-top" alt={e.name}/> </Link>
                             <div className="card-body text-center">
                                 <h5 className="card-title">{e.name}</h5>                                
                                 <Link className="btn btn-primary"

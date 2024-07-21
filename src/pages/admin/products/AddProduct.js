@@ -75,7 +75,7 @@ export default function AddProduct(){
                         images:''
 
                     }} onSubmit={(values) =>{
-                        handleUpload();
+                        //handleUpload();
                         
                         let category = categories.find(c => c.id == selected);
                         if(category === undefined){
@@ -101,6 +101,7 @@ export default function AddProduct(){
                                 ))}                                
                             </select>
                             <input type="file" multiple accept="image/*"  onChange={handleChange}/>
+                            <button type="button" onClick={handleUpload}>Upload Firebase</button>
                             {renderFileList()}                                                       
                             <div className="text-center">
                                 <button type="submit" className="btn btn-primary mt-3" >Add Product</button>

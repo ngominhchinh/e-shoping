@@ -74,7 +74,7 @@ export default function Nav(){
                                 <a className="nav-link" href="#">About us</a>
                             </li>                   
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Contact</a>
+                                <Link className="nav-link" to={'/admin'}>Admin</Link>
                             </li>
                             
                         </ul>
